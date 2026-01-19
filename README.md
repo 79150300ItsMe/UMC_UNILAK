@@ -1,194 +1,123 @@
-# Sistem Informasi Klinik Unilak Medical Center
+# Unilak Medical Center - Sistem Informasi Klinik
 
-Sistem informasi berbasis web untuk mengelola data pasien, konsultasi medis, pembayaran, dan laporan transaksi di klinik Unilak Medical Center.
+Sistem informasi untuk mengelola data pasien, konsultasi medis, dan pembayaran di klinik Universitas Lancang Kuning.
 
-## Fitur Utama
+## 🏥 Fitur Utama
 
-### 1. Login System
+### Admin
 
-- **Admin**: Mengelola data pasien
-- **Dokter**: Mencatat konsultasi medis
-- **Kasir**: Memproses pembayaran
-
-### 2. Modul Admin
-
-- Melihat dan memverifikasi data pasien
-- Mendaftarkan pasien baru (ID, Tanggal Lahir, Nama, Alamat, Telepon, Status)
-- Mengedit data pasien
+- Mengelola data pasien (tambah, edit, lihat)
+- Melihat status pemeriksaan pasien
 - Akses laporan transaksi
 
-### 3. Modul Dokter
+### Dokter
 
-- Melihat riwayat konsultasi
-- Menginput konsultasi baru (ID Konsultasi, Tanggal DDMMYY, ID Pasien, NIK, Keluhan, Diagnosis, Obat)
+- Melihat daftar pasien
+- Mencatat hasil konsultasi medis
+- Auto-fill data pasien berdasarkan ID
 
-### 4. Modul Kasir
+### Kasir
 
-- Memproses pembayaran dengan logika:
-  - **Dosen/Karyawan**: GRATIS (Rp 0)
-  - **Mahasiswa/Umum**: BERBAYAR
-- Melihat riwayat pembayaran
+- Memproses pembayaran konsultasi
+- Sistem tarif otomatis (Gratis untuk Dosen/Karyawan)
+- Riwayat pembayaran
 
-### 5. Laporan Transaksi
+## 📋 Persyaratan Sistem
 
-- Filter laporan per bulan
-- Total transaksi dan pendapatan
-- Fitur cetak laporan
+- PHP 7.4 atau lebih tinggi
+- MySQL/MariaDB
+- Apache Web Server (XAMPP/WAMP)
 
-## Instalasi
+## 🚀 Instalasi
 
-### Persyaratan
+1. **Clone repository**
 
-- XAMPP (Apache + MySQL + PHP)
-- Web browser
-
-### Langkah Instalasi
-
-1. **Pastikan XAMPP sudah terinstall dan berjalan**
-
-   - Jalankan Apache
-   - Jalankan MySQL
-
-2. **File sudah berada di folder yang benar**
-
-   ```
-   c:\xampp\htdocs\UMC_UNILAK\
+   ```bash
+   git clone https://github.com/79150300ItsMe/UMC_UNILAK.git
    ```
 
-3. **Import Database**
+2. **Pindahkan ke folder htdocs**
 
-   - Buka browser dan akses: `http://localhost/phpmyadmin/`
-   - Klik tab "SQL"
-   - Copy seluruh isi file `database/umc_clinic.sql`
-   - Paste di SQL editor dan klik "Go"
-   - Database `umc_clinic` akan otomatis terbuat dengan data sample
+   ```
+   C:\xampp\htdocs\UMC_UNILAK\
+   ```
 
-4. **Akses Aplikasi**
-   - Buka browser
-   - Akses: `http://localhost/UMC_UNILAK/`
-   - Anda akan diarahkan ke halaman login
+3. **Import database**
 
-## Data Login Testing
+   - Buka phpMyAdmin: `http://localhost/phpmyadmin/`
+   - Import file: `database/umc_clinic.sql`
 
-```
-Admin:
-Username: admin
-Password: admin123
+4. **Akses sistem**
+   ```
+   http://localhost/UMC_UNILAK/
+   ```
 
-Kasir:
-Username: kasir
-Password: kasir123
+## 🔐 Login Credentials
 
-Dokter:
-Username: dokter
-Password: dokter123
-```
+| Role   | ID         | Password  |
+| ------ | ---------- | --------- |
+| Admin  | 1234567890 | admin123  |
+| Kasir  | 1234567891 | kasir123  |
+| Dokter | 1234567892 | dokter123 |
 
-## Struktur Database
-
-### Table: users
-
-- Login credentials untuk Admin, Kasir, Dokter
-- Username: 3-10 karakter
-- Password: 3-10 karakter (MD5 hashed)
-
-### Table: patients
-
-- Data pasien (ID, Nama, Tanggal Lahir, Alamat, Telepon, Status)
-- Status: Dosen, Karyawan, Mahasiswa, Umum
-
-### Table: consultations
-
-- Data konsultasi medis
-- Tanggal format DDMMYY
-- Keluhan, Diagnosis, Obat
-
-### Table: payments
-
-- Data pembayaran
-- Status pembayaran (Gratis/Lunas)
-- Dosen/Karyawan = Gratis
-- Mahasiswa/Umum = Berbayar
-
-## Alur Kerja Sistem
-
-1. **Pendaftaran Pasien** (Admin)
-
-   - Admin mendaftarkan pasien baru dengan data lengkap
-   - Status pasien menentukan biaya layanan
-
-2. **Konsultasi Medis** (Dokter)
-
-   - Dokter menginput data konsultasi untuk pasien yang sudah terdaftar
-   - Data tersimpan untuk proses pembayaran
-
-3. **Pembayaran** (Kasir)
-
-   - Kasir memproses pembayaran berdasarkan konsultasi
-   - Sistem otomatis menentukan gratis/berbayar berdasarkan status pasien
-
-4. **Laporan** (Admin/Kasir)
-   - Akses laporan transaksi bulanan
-   - Cetak laporan untuk dokumentasi
-
-## Struktur File
+## 📁 Struktur File
 
 ```
 UMC_UNILAK/
-├── admin/
-│   ├── dashboard.php
-│   ├── patients.php
-│   ├── patient_add.php
-│   └── patient_edit.php
-├── dokter/
-│   ├── dashboard.php
-│   ├── consultations.php
-│   └── consultation_add.php
-├── kasir/
-│   ├── dashboard.php
-│   ├── payments.php
-│   └── payment_process.php
-├── reports/
-│   └── transaction_report.php
-├── database/
+├── admin/              # Modul Admin
+│   ├── dasbor.php
+│   ├── daftar_pasien.php
+│   ├── tambah_pasien.php
+│   └── ubah_pasien.php
+├── dokter/             # Modul Dokter
+│   ├── dasbor.php
+│   ├── daftar_pasien.php
+│   ├── daftar_konsultasi.php
+│   └── tambah_konsultasi.php
+├── kasir/              # Modul Kasir
+│   ├── dasbor.php
+│   ├── daftar_pembayaran.php
+│   └── proses_pembayaran.php
+├── reports/            # Modul Laporan
+│   └── laporan_transaksi.php
+├── database/           # Database Schema
 │   └── umc_clinic.sql
-├── config.php
-├── login.php
-├── logout.php
-├── index.php
-└── style.css
+├── config.php          # Konfigurasi Database
+├── login.php           # Halaman Login
+├── logout.php          # Logout Handler
+├── style.css           # Stylesheet
+└── index.php           # Entry Point
+
 ```
 
-## Catatan Penting
+## 🎯 Fitur Khusus
 
-- Tampilan dibuat **sesimple mungkin** dengan fokus pada **fungsi dan alur kerja**
-- Sistem mengikuti use-case diagram dan ketentuan yang diberikan
-- Status pasien **menentukan biaya layanan** secara otomatis
-- Format tanggal konsultasi menggunakan **DDMMYY** sesuai spesifikasi
-- Laporan dapat di-**print** untuk dokumentasi
+- **Auto-generate ID**: ID Pasien dan ID Konsultasi otomatis
+- **Validasi ID**: Login menggunakan ID 10 digit angka
+- **Smart Pricing**: Tarif otomatis berdasarkan status (Dosen/Karyawan gratis)
+- **Date Auto-fill**: Tanggal konsultasi otomatis dari tanggal pendaftaran
+- **Status Tracking**: Tracking status pemeriksaan pasien
 
-## Troubleshooting
+## 🛠️ Teknologi
 
-**Database connection error:**
+- **Backend**: PHP
+- **Database**: MySQL
+- **Frontend**: HTML, CSS, JavaScript
 
-- Pastikan MySQL berjalan di XAMPP
-- Cek file `config.php` untuk kredensial database
+## 📝 Ketentuan Sistem
 
-**Login gagal:**
+Sistem ini dibuat mengikuti spesifikasi:
 
-- Pastikan database sudah diimport
-- Gunakan username/password yang benar
-- Username dan password harus 3-10 karakter
+1. Login dengan ID 10 digit angka (validasi tipe integer)
+2. Admin mengelola data pasien (termasuk NIK)
+3. Dokter mencatat konsultasi (data pasien auto-fill)
+4. Kasir memproses pembayaran (tarif berbasis status)
+5. Laporan transaksi bulanan
 
-**Halaman blank:**
+## 📄 Lisensi
 
-- Cek error di XAMPP control panel
-- Pastikan PHP error reporting aktif
+Dibuat untuk keperluan akademik Universitas Lancang Kuning.
 
-## Dibuat Oleh
+## 👨‍💻 Developer
 
-Sistem ini dibuat untuk memenuhi tugas Ujian Laboratorium:
-
-- **Mata Kuliah**: Pemrograman
-- **Program Studi**: Teknik Informatika & Sistem Informasi
-- **Institusi**: Universitas Lancang Kuning, Fakultas Ilmu Komputer
+Developed with ❤️ for Unilak Medical Center
